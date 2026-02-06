@@ -30,7 +30,7 @@ export async function getSatoriFonts(headerFont: FontSpecification, bodyFont: Fo
 
   // Fetch fonts for all weights and convert to satori format in one go
   const headerFontPromises = headerWeights.map(async (weight) => {
-    const data = await fetchTtf(headerFontName, weight)
+    const data = await loadFontData(headerFontName, weight)
     if (!data) return null
     return {
       name: headerFontName,
@@ -41,7 +41,7 @@ export async function getSatoriFonts(headerFont: FontSpecification, bodyFont: Fo
   })
 
   const bodyFontPromises = bodyWeights.map(async (weight) => {
-    const data = await fetchTtf(bodyFontName, weight)
+    const data = await loadFontData(bodyFontName, weight)
     if (!data) return null
     return {
       name: bodyFontName,
@@ -71,6 +71,15 @@ export async function getSatoriFonts(headerFont: FontSpecification, bodyFont: Fo
  * @param weight what font weight to fetch font
  * @returns `.ttf` file of google font
  */
+async function loadFontData(rawFontName: string, weight: FontWeight) {
+  const localFont = await fetchLocalFont(rawFontName, weight)
+  if (localFont) {
+    return localFont
+  }
+
+  return fetchTtf(rawFontName, weight)
+}
+
 export async function fetchTtf(
   rawFontName: string,
   weight: FontWeight,
@@ -115,6 +124,49 @@ export async function fetchTtf(
   await fs.writeFile(cachePath, fontData)
 
   return fontData
+}
+
+async function fetchLocalFont(
+  rawFontName: string,
+  weight: FontWeight,
+): Promise<Buffer<ArrayBufferLike> | undefined> {
+  const weightName = localWeightName(weight)
+  if (!weightName) {
+    return
+  }
+
+  const sanitizedName = rawFontName.replace(/\s+/g, "")
+  const candidates = [
+    path.join(QUARTZ, "static", "fonts", `${sanitizedName}-${weightName}.ttf`),
+    path.join(QUARTZ, "static", "fonts", `${sanitizedName}-${weightName}.woff2`),
+  ]
+
+  for (const fontPath of candidates) {
+    try {
+      return await fs.readFile(fontPath)
+    } catch (err) {
+      continue
+    }
+  }
+
+  return
+}
+
+function localWeightName(weight: FontWeight) {
+  switch (weight) {
+    case 300:
+      return "Light"
+    case 400:
+      return "Regular"
+    case 500:
+      return "Medium"
+    case 600:
+      return "SemiBold"
+    case 700:
+      return "Bold"
+    default:
+      return undefined
+  }
 }
 
 export type SocialImageOptions = {

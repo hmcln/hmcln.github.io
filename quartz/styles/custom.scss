@@ -1,3 +1,68 @@
 @use "./base.scss";
 
-// put your custom CSS here!
+@font-face {
+  font-family: "Ioskeley Mono";
+  src: url("/static/fonts/IoskeleyMono-Light.woff2") format("woff2");
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Ioskeley Mono";
+  src: url("/static/fonts/IoskeleyMono-Regular.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Ioskeley Mono";
+  src: url("/static/fonts/IoskeleyMono-Medium.woff2") format("woff2");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Ioskeley Mono";
+  src: url("/static/fonts/IoskeleyMono-SemiBold.woff2") format("woff2");
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Ioskeley Mono";
+  src: url("/static/fonts/IoskeleyMono-Bold.woff2") format("woff2");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  font-family: var(--bodyFont);
+}
+
+body,
+button,
+input,
+textarea {
+  font-family: var(--bodyFont);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.nav-header {
+  font-family: var(--headerFont);
+  color: #faba4a;
+}
+
+.page-title,
+.page-title a {
+  color: #faba4a;
+}
