@@ -1,11 +1,21 @@
 # 01_intro.md
 
 ## Table of Contents
+- [0. Build Path First](#0-build-path-first)
 - [1. Purpose of gx.md](#1-purpose-of-gxmd)
 - [2. Compiler Analogy](#2-compiler-analogy)
 - [3. Mental Model](#3-mental-model)
 - [4. Why Rust Fits This Problem](#4-why-rust-fits-this-problem)
 - [5. Why this matters](#5-why-this-matters)
+
+## 0. Build Path First
+Before reading this chapter deeply, start with `00_build_workshop.md`.
+
+That file gives the practical sequence:
+
+- exact commands to run,
+- milestone-by-milestone success checks,
+- a path from learning to a working product.
 
 ## 1. Purpose of gx.md
 
